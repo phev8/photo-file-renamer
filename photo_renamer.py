@@ -42,7 +42,9 @@ class ExifTool(object):
 def get_create_date_and_camera_from_exif(image_file):
     image = Image.open(image_file)
     info = image._getexif()
-    #print(info[0x9004])
+    if info is None:
+        return None, 'no info'
+
     try:
         date = datetime.strptime(info[0x9004], "%Y:%m:%d %H:%M:%S")
     except KeyError as e:
